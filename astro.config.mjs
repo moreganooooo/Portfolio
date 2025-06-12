@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   output: 'static',
   // adapter: vercel(),
-  site: "https://yourdomain.com", // <-- update this
+  site: "https://www.morganawesome.com", // <-- update this
   integrations: [
     tailwind(),
     icon(),
