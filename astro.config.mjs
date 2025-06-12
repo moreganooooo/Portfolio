@@ -3,17 +3,17 @@ import partytown from "@astrojs/partytown";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+// import vercel from "@astrojs/vercel"; // Uncomment if deploying to Vercel
 
-// https://astro.build/config
 export default defineConfig({
-  output: 'static', // Changed from 'server'
-  // Removed adapter - not needed for static sites
-  site: "https://example.com", // Placeholder for your future domain
+  output: 'static',
+  // adapter: vercel(),
+  site: "https://yourdomain.com", // <-- update this
   integrations: [
-    tailwind(), // For styling
-    icon(), // For using icons easily
-    sitemap(), // Generates a sitemap for search engines
-    partytown({ // Helps with third-party script performance
+    tailwind(),
+    icon(),
+    sitemap(),
+    partytown({
       config: {
         forward: ["dataLayer.push"],
       },

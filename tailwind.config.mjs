@@ -6,17 +6,17 @@ export default {
   safelist: [
     {
       pattern: /col-span-(\d+)/,
-      variants: ["lg"],
+      variants: ['responsive', 'hover', 'focus'],
     },
     // Height
     {
       pattern: /h-(0|2|3|4|6|8|12|16|24|32)/,
-      variants: ["lg"],
+      variants: ['responsive', 'hover', 'focus'],
     },
     // Text sizes for all screen sizes
     {
       pattern: /text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)/,
-      variants: ["lg"],
+      variants: ['responsive', 'hover', 'focus'],
     },
     // Font weights
     {
@@ -96,11 +96,9 @@ export default {
       },
     },
   },
-  variants: {
-    animation: ["responsive"],
-  },
   plugins: [
     require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
     require("tailwindcss/plugin")(function ({ addVariant }) {
       addVariant("dark-me", ".dark_&");
     }),
