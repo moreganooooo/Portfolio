@@ -1,23 +1,24 @@
 ---
+import type { CollectionEntry } from 'astro:content'
 // Blog Post Page
-// ------------
 // Description: The blog post page.
 
 // Components
-// - Layout
 import Layout from '../../layouts/PostLayout.astro'
 
 // Data
-import { getCollection, render  } from 'astro:content'
+import { getCollection, render } from 'astro:content'
+
 export async function getStaticPaths() {
 	const blogEntries = await getCollection('blog')
-	return blogEntries.map((entry) => ({
-		params:{ id: decodeURI( entry.id )},
+	return blogEntries.map((entry: CollectionEntry<'blog'>) => ({
+		params: { id: decodeURI(entry.id) },
 		props: { entry }
 	}))
 }
-const { entry } = Astro.props
-const { Content } = await render(entry);
+
+const { entry } = Astro.props as { entry: CollectionEntry<'blog'> }
+const { Content } = await render(entry)
 ---
 
 <Layout frontmatter={entry.data}>

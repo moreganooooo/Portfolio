@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "jsx": "preserve",
     "baseUrl": ".",
+    "types": ["astro/astro-jsx"],
     "paths": {
       "~/*": ["src/*"]
     }
