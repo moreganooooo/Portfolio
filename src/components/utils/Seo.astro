@@ -1,0 +1,42 @@
+---
+type Props = {
+	title?: string
+	description?: string
+	ogImage?: string
+	noindex?: boolean
+}
+
+const defaultTitle = 'Foxi – Seamless Productivity for Modern Teams'
+const defaultDescription =
+	'Enhance team performance with seamless integration. Work smarter, not harder, with Foxi.'
+const defaultOG = '/og.jpg'
+
+const {
+	title = defaultTitle,
+	description = defaultDescription,
+	ogImage = defaultOG,
+	noindex = false
+} = Astro.props
+---
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content={description} />
+	{noindex && <meta name="robots" content="noindex" />}
+
+	<!-- OpenGraph -->
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:image" content={ogImage} />
+	<meta property="og:url" content="https://morganawesome.com" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={ogImage} />
+
+	<title>{title}</title>
+</head>
