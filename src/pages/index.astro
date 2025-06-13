@@ -62,7 +62,6 @@
 	}
 </script>
 
- prettier-ignore -->
 <script id="fragmentshader" type="x-shader/x-fragment">
 	uniform
 	vec3
@@ -81,11 +80,11 @@
 	}
 </script>
 
-<!-- jQuery FIRST -->
+ jQuery FIRST -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <!-- Three.js and FontLoader -->
-<script src="/three/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/FontLoader.js"></script>
 
 <!-- Particle Text -->
@@ -99,10 +98,10 @@
 </script>
 
 <!-- Particle Network (jQuery-based) -->
-<script src="/particles-test/script.js"></script>
+<script src="/particles-text/script.js"></script>
 <script>
 	$(document).ready(function () {
-		const container = document.getElementById('particle')
+		const container = document.getElementById('particle-container')
 		if (container && window.PNA) {
 			const animation = new window.PNA()
 			animation.init(container)
