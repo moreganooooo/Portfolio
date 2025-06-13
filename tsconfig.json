@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "types": ["astro/astro-jsx"],
+    "types": ["astro/astro-jsx", "jquery"],
     "paths": {
       "~/*": ["src/*"]
     }

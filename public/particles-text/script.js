@@ -1,19 +1,25 @@
-// Attach this main function to window so Astro/JS can call it anytime.
 window.initParticlesText = function (containerId, text) {
   const container = document.getElementById(containerId);
   if (!container) {
     console.error(`No element found with id ${containerId}`);
     return;
   }
-  container.innerHTML = ''; // clean up old canvas, safe for reruns!
+  container.innerHTML = ''; // Clean up old canvas!
 
-  let manager = new THREE.LoadingManager();
   let typo = null;
+  let particle = null;
 
+  const manager = new THREE.LoadingManager();
   manager.onLoad = function () {
-    new Environment(typo, particle, container, text);
+    // Only run Environment after BOTH are loaded!
+    if (typo && particle) {
+      new Environment(typo, particle, container, text);
+    } else {
+      console.error('Font or particle texture failed to load.');
+    }
   };
 
+  // Load font
   const loader = new THREE.FontLoader(manager);
   loader.load(
     'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
@@ -22,8 +28,13 @@ window.initParticlesText = function (containerId, text) {
     }
   );
 
-  const particle = new THREE.TextureLoader(manager).load(
-    'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
+  // Load particle image
+  const textureLoader = new THREE.TextureLoader(manager);
+  textureLoader.load(
+    'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png',
+    function (tex) {
+      particle = tex;
+    }
   );
 };
 

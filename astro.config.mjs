@@ -19,10 +19,9 @@ export default defineConfig({
       },
     }),
   ],
-  hooks: {
-    'astro:build:done': async () => {
-      const cheerio = await import('cheerio');
-      // use cheerio.default or cheerio.load here
+  vite: {
+    ssr: {
+      noExternal: ["@iconify/tools", "cheerio"],
     }
   }
 });
