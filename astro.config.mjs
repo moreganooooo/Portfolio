@@ -3,6 +3,7 @@ import partytown from "@astrojs/partytown";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import * as cheerio from 'cheerio';
 // import vercel from "@astrojs/vercel"; // Uncomment if deploying to Vercel
 
 export default defineConfig({
