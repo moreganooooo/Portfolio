@@ -3,9 +3,8 @@ import partytown from "@astrojs/partytown";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const cheerio = require('cheerio');
+// REMOVE CHEERIO!
+// import * as cheerio from 'cheerio';
 // import vercel from "@astrojs/vercel"; // Uncomment if deploying to Vercel
 
 export default defineConfig({
