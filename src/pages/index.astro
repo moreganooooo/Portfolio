@@ -1,29 +1,51 @@
 ---
-// Components
-// - Layout
-import Layout from '../layouts/Layout.astro'
-// - UI
-import Hero from '../components/blocks/hero/HomeCTA.astro'
-import Features from '../components/blocks/features/FeatureCards.astro'
-import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
-import HighlightBlocks from '../components/blocks/highlights/HightlightRows.astro'
-import CTA from '../components/blocks/CTA/BasicDark.astro'
-
-// Content
-// - Testimonial background
-import testimonialBackground from '../assets/testimonial-bg-01.webp'
-// - SEO
-const SEO = {
-	title: 'Foxi | Your Productivity Toolkit',
-	description:
-		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
-}
+/* No props, no data needed */
 ---
 
-<Layout title={SEO.title} description={SEO.description}>
-	<Hero />
-	<Features />
-	<Testimonial bg={testimonialBackground} bgPosition="right" />
-	<HighlightBlocks />
-	<CTA />
-</Layout>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Morgan's Portfolio (Coming Soon!)</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="/favicon.ico" />
+
+		<!-- Particle network animation styles -->
+		<link rel="stylesheet" href="/particle-style.css" />
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				width: 100vw;
+				overflow: hidden;
+			}
+			.centered {
+				position: absolute;
+				z-index: 2;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				color: white;
+				text-align: center;
+				font-size: 2.5rem;
+				font-family: 'Inter', sans-serif;
+				text-shadow: 0 4px 32px rgba(0, 0, 0, 0.28);
+				pointer-events: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Particle network animation canvas -->
+		<canvas
+			id="particle-canvas"
+			style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;"></canvas>
+
+		<div class="centered">
+			<span style="font-size:4rem;letter-spacing:0.05em;">✨</span><br />
+			<strong>The Adventure Begins</strong><br />
+			<span style="font-size:1.25rem;">Hang in there for something astonishing.</span>
+		</div>
+
+		<!-- Particle network animation script -->
+		<script src="/particle-script.js"></script>
+	</body>
+</html>
