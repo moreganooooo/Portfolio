@@ -82,14 +82,17 @@
 
  jQuery FIRST -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script is:inline></script>
 
 <!-- Three.js and FontLoader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/FontLoader.js"></script>
+<script is:inline></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/FontLoader.js"
+></script><script is:inline></script>
 
 <!-- Particle Text -->
 <script src="/particles-text/script.js"></script>
-<script>
+<script is:inline>
 	document.addEventListener('DOMContentLoaded', function () {
 		if (window.initParticlesText) {
 			window.initParticlesText('particles-text-container', 'COMING SOON')
@@ -99,7 +102,7 @@
 
 <!-- Particle Network (jQuery-based) -->
 <script src="/particles-text/script.js"></script>
-<script>
+<script is:inline>
 	$(document).ready(function () {
 		const container = document.getElementById('particle-container')
 		if (container && window.PNA) {
