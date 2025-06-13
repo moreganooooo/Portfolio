@@ -34,18 +34,31 @@
 		</style>
 	</head>
 	<body>
-		<!-- Particle network animation canvas -->
-		<canvas
-			id="particle-canvas"
-			style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;"></canvas>
+		<div
+			id="particle-container"
+			style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;overflow:hidden;"
+		>
+		</div>
 
 		<div class="centered">
-			<span style="font-size:4rem;letter-spacing:0.05em;">✨</span><br />
+			<span style="font-size:4rem;letter-spacing:0.05em;"></span><br />
 			<strong>The Adventure Begins</strong><br />
 			<span style="font-size:1.25rem;">Hang in there for something astonishing.</span>
 		</div>
 
-		<!-- Particle network animation script -->
+		<!-- Make sure these are in the right order! -->
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" is:inline={false}></script>
 		<script src="/particle-script.js" is:inline={false}></script>
+		<script is:inline={false}>
+			$(function () {
+				var container = document.getElementById('particle-container')
+				if (container && window.PNA) {
+					var animation = new window.PNA()
+					animation.init(container)
+				} else {
+					console.error('Particle container or PNA not found!')
+				}
+			})
+		</script>
 	</body>
 </html>
