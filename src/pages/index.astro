@@ -81,16 +81,16 @@
 	}
 </script>
 
-<!-- 1. jQuery FIRST (before any script that uses $) -->
+<!-- Load jQuery FIRST -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- 2. Three.js and FontLoader (for text-particles) -->
-<script src="/three/three.min.js" is:inline={false}></script>
-<script src="/three/FontLoader.js" is:inline={false}></script>
+<!-- Load Three.js and FontLoader from the same version -->
+<script src="/three/three.min.js"></script>
+<script src="/three/FontLoader.js"></script>
 
-<!-- 3. Your text-particles effect script -->
-<script src="/particles-text/script.js" is:inline={false}></script>
-<script is:inline>
+<!-- Custom Particle Scripts -->
+<script src="/particles-text/script.js"></script>
+<script>
 	document.addEventListener('DOMContentLoaded', function () {
 		if (window.initParticlesText) {
 			window.initParticlesText('particles-text-container', 'COMING SOON')
@@ -98,9 +98,9 @@
 	})
 </script>
 
-<!-- 4. Particle network effect (AFTER jQuery!) -->
-<script is:inline src="/particles-text/script.js"></script>
-<script is:inline>
+<!-- Network Particle Script -->
+<script src="/particles-test/script.js"></script>
+<script>
 	$(document).ready(function () {
 		var container = document.getElementById('particle')
 		if (container && window.PNA) {
