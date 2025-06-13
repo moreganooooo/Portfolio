@@ -2,63 +2,154 @@
 /* No props, no data needed */
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Morgan's Portfolio (Coming Soon!)</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="/favicon.ico" />
+<link rel="stylesheet" href="/particles-text/style.css" />
+<link rel="stylesheet" href="/particle-style.css" />
 
-		<!-- Particle network animation styles -->
-		<link rel="stylesheet" href="/particle-style.css" />
-		<style>
-			body {
-				margin: 0;
-				min-height: 100vh;
-				width: 100vw;
-				overflow: hidden;
-			}
-			.centered {
-				position: absolute;
-				z-index: 2;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				color: white;
-				text-align: center;
-				font-size: 2.5rem;
-				font-family: 'Inter', sans-serif;
-				text-shadow: 0 4px 32px rgba(0, 0, 0, 0.28);
-				pointer-events: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div
-			id="particle-container"
-			style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;overflow:hidden;"
-		>
-		</div>
+<style>
+	body {
+		margin: 0;
+		min-height: 100vh;
+		width: 100vw;
+		overflow: hidden;
+	}
+	.centered {
+		position: absolute;
+		z-index: 2;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+		text-align: center;
+		font-size: 2.5rem;
+		font-family: 'Inter', sans-serif;
+		text-shadow: 0 4px 32px rgba(0, 0, 0, 0.28);
+		pointer-events: none;
+	}
+</style>
 
-		<div class="centered">
-			<span style="font-size:4rem;letter-spacing:0.05em;"></span><br />
-			<strong>The Adventure Begins</strong><br />
-			<span style="font-size:1.25rem;">Hang in there for something astonishing.</span>
-		</div>
+<div
+	id="particle-container"
+	style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;overflow:hidden;"
+>
+</div>
 
-		<!-- Make sure these are in the right order! -->
-		<script src="https://code.jquery.com/jquery-3.7.1.min.js" is:inline={false}></script>
-		<script src="/particle-script.js" is:inline={false}></script>
-		<script is:inline={false}>
-			$(function () {
-				var container = document.getElementById('particle-container')
-				if (container && window.PNA) {
-					var animation = new window.PNA()
-					animation.init(container)
-				} else {
-					console.error('Particle container or PNA not found!')
-				}
-			})
-		</script>
-	</body>
-</html>
+<div
+	id="particles-text-container"
+	style="position:fixed;z-index:2;width:100vw;height:100vh;top:0;left:0;pointer-events:none;"
+>
+</div>
+
+<div class="centered">
+	<span style="font-size:4rem;letter-spacing:0.05em;"></span><br />
+	<strong>The Adventure Begins</strong><br />
+	<span style="font-size:1.25rem;">Hang in there for something astonishing.</span>
+</div>
+
+<!-- prettier-ignore -->
+<script id="vertexshader" type="x-shader/x-vertex">
+	attribute
+	float
+	size
+	attribute
+	vec3
+	customColor
+	varying
+	vec3
+	vColor
+	void main()
+	{
+		vColor = customColor
+		vec4
+		mvPosition = modelViewMatrix * vec4(position, 1.0)
+		gl_PointSize = size * (300.0 / length(mvPosition.xyz))
+		gl_Position = projectionMatrix * mvPosition
+	}
+</script>
+
+ prettier-ignore -->
+<script id="fragmentshader" type="x-shader/x-fragment">
+	uniform
+	vec3
+	color
+	uniform
+	sampler2D
+	pointTexture
+	varying
+	vec3
+	vColor
+	void main()
+	{
+		gl_FragColor = vec4(color * vColor, 1.0)
+		gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord)
+		if (gl_FragColor.a < 0.15) discard
+	}
+</script>
+
+<!-- SHADERS -->
+<!-- prettier-ignore -->
+<script id="vertexshader" type="x-shader/x-vertex">
+	attribute
+	float
+	size
+	attribute
+	vec3
+	customColor
+	varying
+	vec3
+	vColor
+	void main()
+	{
+		vColor = customColor
+		vec4
+		mvPosition = modelViewMatrix * vec4(position, 1.0)
+		gl_PointSize = size * (300.0 / length(mvPosition.xyz))
+		gl_Position = projectionMatrix * mvPosition
+	}
+</script>
+ prettier-ignore -->
+<script id="fragmentshader" type="x-shader/x-fragment">
+	uniform
+	vec3
+	color
+	uniform
+	sampler2D
+	pointTexture
+	varying
+	vec3
+	vColor
+	void main()
+	{
+		gl_FragColor = vec4(color * vColor, 1.0)
+		gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord)
+		if (gl_FragColor.a < 0.15) discard
+	}
+</script>
+
+<!-- jQuery for network effect -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Three.js and FontLoader for text-particles -->
+<script src="/three/three.min.js" is:inline={false}></script>
+<script src="/three/FontLoader.js" is:inline={false}></script>
+
+<!-- Particles text effect -->
+<script src="/particles-text/script.js" is:inline={false}></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		if (window.initParticlesText) {
+			window.initParticlesText('particles-text-container', 'COMING SOON')
+		}
+	})
+</script>
+
+<!-- Particle network effect (optional) -->
+<script src="/particle-script.js" is:inline={false}></script>
+<script>
+	$(function () {
+		var container = document.getElementById('particle-container')
+		if (container && window.PNA) {
+			var animation = new window.PNA()
+			animation.init(container)
+		}
+	})
+</script>

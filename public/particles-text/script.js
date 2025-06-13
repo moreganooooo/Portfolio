@@ -1,38 +1,43 @@
-const preload = () => {
+// Attach this main function to window so Astro/JS can call it anytime.
+window.initParticlesText = function (containerId, text) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    console.error(`No element found with id ${containerId}`);
+    return;
+  }
+  container.innerHTML = ''; // clean up old canvas, safe for reruns!
+
   let manager = new THREE.LoadingManager();
+  let typo = null;
+
   manager.onLoad = function () {
-    const environment = new Environment(typo, particle);
+    new Environment(typo, particle, container, text);
   };
 
-  var typo = null;
   const loader = new THREE.FontLoader(manager);
-  const font = loader.load(
+  loader.load(
     'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
     function (font) {
       typo = font;
     }
   );
+
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
 };
 
-if (
-  document.readyState === 'complete' ||
-  (document.readyState !== 'loading' && !document.documentElement.doScroll)
-)
-  preload();
-else document.addEventListener('DOMContentLoaded', preload);
+// ---- CLASSES BELOW ----
 
 class Environment {
-  constructor(font, particle) {
+  constructor(font, particle, container, text) {
     this.font = font;
     this.particle = particle;
-    this.container = document.querySelector('#magic');
+    this.container = container;
     this.scene = new THREE.Scene();
     this.createCamera();
     this.createRenderer();
-    this.setup();
+    this.setup(text);
     this.bindEvents();
   }
 
@@ -40,13 +45,14 @@ class Environment {
     window.addEventListener('resize', this.onWindowResize.bind(this));
   }
 
-  setup() {
+  setup(text) {
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
       this.particle,
       this.camera,
-      this.renderer
+      this.renderer,
+      text
     );
   }
 
@@ -66,11 +72,9 @@ class Environment {
   }
 
   createRenderer() {
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({ alpha: true });
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.container.appendChild(this.renderer.domElement);
 
@@ -87,7 +91,7 @@ class Environment {
 }
 
 class CreateParticles {
-  constructor(scene, font, particleImg, camera, renderer) {
+  constructor(scene, font, particleImg, camera, renderer, text) {
     this.scene = scene;
     this.font = font;
     this.particleImg = particleImg;
@@ -101,8 +105,9 @@ class CreateParticles {
 
     this.buttom = false;
 
+    // Use the provided text or fallback
     this.data = {
-      text: 'FUTURE\nIS NOW',
+      text: text || 'FUTURE\nIS NOW',
       amount: 1500,
       particleSize: 1,
       particleColor: 0xffffff,
@@ -127,12 +132,13 @@ class CreateParticles {
   }
 
   bindEvents() {
+    // Use arrow functions to keep 'this' bound properly
     document.addEventListener('mousedown', this.onMouseDown.bind(this));
     document.addEventListener('mousemove', this.onMouseMove.bind(this));
     document.addEventListener('mouseup', this.onMouseUp.bind(this));
   }
 
-  onMouseDown() {
+  onMouseDown(event) {
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -142,22 +148,22 @@ class CreateParticles {
     const distance = -this.camera.position.z / dir.z;
     this.currenPosition = this.camera.position.clone().add(dir.multiplyScalar(distance));
 
-    const pos = this.particles.geometry.attributes.position;
+    // Mark button as down
     this.buttom = true;
     this.data.ease = 0.01;
   }
 
-  onMouseUp() {
+  onMouseUp(event) {
     this.buttom = false;
     this.data.ease = 0.05;
   }
 
-  onMouseMove() {
+  onMouseMove(event) {
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
-  render(level) {
+  render() {
     const time = ((0.001 * performance.now()) % 12) / 12;
     const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
 
@@ -309,14 +315,17 @@ class CreateParticles {
     geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
     geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
 
+    // Need to grab these from your Astro page for shader strings
+    const vertexShader = document.getElementById('vertexshader').textContent;
+    const fragmentShader = document.getElementById('fragmentshader').textContent;
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         color: { value: new THREE.Color(0xffffff) },
         pointTexture: { value: this.particleImg },
       },
-      vertexShader: document.getElementById('vertexshader').textContent,
-      fragmentShader: document.getElementById('fragmentshader').textContent,
-
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
       blending: THREE.AdditiveBlending,
       depthTest: false,
       transparent: true,
