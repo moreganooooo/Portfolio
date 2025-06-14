@@ -1,114 +1,29 @@
-<link rel="stylesheet" href="/particles-text/style.css" />
-<link rel="stylesheet" href="/particle-style.css" />
+---
+// src/pages/index.astro
+---
 
-<style>
-	body {
-		margin: 0;
-		min-height: 100vh;
-		width: 100vw;
-		overflow: hidden;
-	}
-	.centered {
-		position: absolute;
-		z-index: 2;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: white;
-		text-align: center;
-		font-size: 2.5rem;
-		font-family: 'Inter', sans-serif;
-		text-shadow: 0 4px 32px rgba(0, 0, 0, 0.28);
-		pointer-events: none;
-	}
-</style>
-
-<div
-	id="particle-container"
-	style="position:fixed;z-index:1;width:100vw;height:100vh;top:0;left:0;overflow:hidden;"
->
-</div>
-
-<div
-	id="particles-text-container"
-	style="position:fixed;z-index:2;width:100vw;height:100vh;top:0;left:0;pointer-events:none;"
->
-</div>
-
-<div class="centered">
-	<span style="font-size:4rem;letter-spacing:0.05em;"></span><br />
-	<strong>The Adventure Begins</strong><br />
-	<span style="font-size:1.25rem;">Hang in there for something astonishing.</span>
-</div>
-
-<!-- prettier-ignore -->
-<script id="vertexshader" type="x-shader/x-vertex">
-	attribute
-	float
-	size
-	attribute
-	vec3
-	customColor
-	varying
-	vec3
-	vColor
-	void main()
-	{
-		vColor = customColor
-		vec4
-		mvPosition = modelViewMatrix * vec4(position, 1.0)
-		gl_PointSize = size * (300.0 / length(mvPosition.xyz))
-		gl_Position = projectionMatrix * mvPosition
-	}
-</script>
-
-<script id="fragmentshader" type="x-shader/x-fragment">
-	uniform
-	vec3
-	color
-	uniform
-	sampler2D
-	pointTexture
-	varying
-	vec3
-	vColor
-	void main()
-	{
-		gl_FragColor = vec4(color * vColor, 1.0)
-		gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord)
-		if (gl_FragColor.a < 0.15) discard
-	}
-</script>
-
- jQuery FIRST -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" is:inline></script>
-
-<!-- Load the Particle Text/Network script only once -->
-<script src="/particles-text/script.js" is:inline></script>
-
-<!-- Import your client-side script from src/scripts/ -->
-<script>
-	import './scripts/particle-init.js'
-</script>
-
-<!-- Inline initialization for Particle Text (if necessary) -->
-<script type="module" is:inline>
-	// You might not need FontLoader imported here anymore if it's handled in particle-init.js
-	// If particle-init.js exposes a global function that uses FontLoader, you can call it here
-	document.addEventListener('DOMContentLoaded', function () {
-		if (window.initParticlesText) {
-			window.initParticlesText('particles-text-container', 'COMING SOON')
-		}
-	})
-</script>
-
-<!-- Inline initialization for Particle Network (jQuery-based) -->
-<script is:inline>
-	$(document).ready(function () {
-		const container = document.getElementById('particle-container')
-		if (container && window.PNA) {
-			const animation = new window.PNA()
-			animation.init(container)
-		}
-	})
-</script>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Particles Text Landing</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				background: black;
+				height: 100%;
+				width: 100%;
+			}
+			#three-container {
+				width: 100%;
+				height: 100vh;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="three-container"></div>
+		<script type="module" src="/particles-text.js"></script>
+	</body>
+</html>
