@@ -81,18 +81,20 @@
 </script>
 
  jQuery FIRST -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script is:inline></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" is:inline></script>
 
-<!-- Three.js and FontLoader -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script is:inline></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/FontLoader.js"
-></script><script is:inline></script>
+<!-- Load the Particle Text/Network script only once -->
+<script src="/particles-text/script.js" is:inline></script>
 
-<!-- Particle Text -->
-<script src="/particles-text/script.js"></script>
-<script is:inline>
+<!-- Import your client-side script from src/scripts/ -->
+<script>
+	import './scripts/particle-init.js'
+</script>
+
+<!-- Inline initialization for Particle Text (if necessary) -->
+<script type="module" is:inline>
+	// You might not need FontLoader imported here anymore if it's handled in particle-init.js
+	// If particle-init.js exposes a global function that uses FontLoader, you can call it here
 	document.addEventListener('DOMContentLoaded', function () {
 		if (window.initParticlesText) {
 			window.initParticlesText('particles-text-container', 'COMING SOON')
@@ -100,8 +102,7 @@
 	})
 </script>
 
-<!-- Particle Network (jQuery-based) -->
-<script src="/particles-text/script.js"></script>
+<!-- Inline initialization for Particle Network (jQuery-based) -->
 <script is:inline>
 	$(document).ready(function () {
 		const container = document.getElementById('particle-container')
